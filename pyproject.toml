@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "nordclan-test"
+version = "0.1.0"
+description = "Modern Python test automation framework"
+authors = ["Yaroslav <yarik.wade@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pytest = "^7.4.0"
+selene = "^2.0.0rc9"
+selenium = "^4.15.0"
+allure-pytest = "^2.13.0"
+pytest-xdist = "^3.3.0"
+webdriver-manager = "^4.0.0"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^4.1.0"
+black = "^23.10.0"
+isort = "^5.12.0"
+flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+"""
+Можно также здесь добавить настройку из pytest.ini
+"""
