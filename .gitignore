@@ -185,3 +185,4 @@ cython_debug/
 /tests/conftest_example.py
 /tests/project.py
 /model/
+/pyproject.txt
