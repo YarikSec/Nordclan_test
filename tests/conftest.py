@@ -3,7 +3,7 @@ import os
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selene import Browser, Config
+from selene import browser
 from dotenv import load_dotenv
 
 from pages.main_page import MainPage
@@ -12,12 +12,12 @@ from pages.vacancies_page import VacanciesPage
 from utils import attach
 
 
-DEFAULT_BROWSER_VERSION = "latest" # или "100.0"
+DEFAULT_BROWSER_VERSION = "128.0" # или "latest"
 
 def pytest_addoption(parser):
     parser.addoption(
-        '--browser_version',
-        default='100.0'
+        '--browser_version', help="Choose browser version for testing",
+        default='120.0'
     )
 
 
@@ -26,10 +26,14 @@ def load_env():
     load_dotenv()
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='function', autouse=True)
 def setup_browser(request):
     browser_version = request.config.getoption('--browser_version')
     browser_version = browser_version if browser_version != "" else DEFAULT_BROWSER_VERSION
+    browser.config.base_url = 'https://nordclan.com'
+    browser.config.window_width = 1920
+    browser.config.window_height = 1080
+
 
     options = Options()
     selenoid_capabilities = {
@@ -40,28 +44,26 @@ def setup_browser(request):
             "enableVideo": True
         }
     }
+
+    selenoid_login = os.getenv('SELENOID_LOGIN')
+    selenoid_password = os.getenv('SELENOID_PASSWORD')
+    selenoid_url = os.getenv('SELENOID_URL')
+
     options.capabilities.update(selenoid_capabilities)
-
-    login = os.getenv('LOGIN')
-    password = os.getenv('PASSWORD')
-    base_url = os.getenv('BASE_URL')
-
     driver = webdriver.Remote(
-        command_executor=f"https://{login}:{password}@selenoid.autotests.cloud/wd/hub",
+        command_executor=f"https://{selenoid_login}:{selenoid_password}@{selenoid_url}/wd/hub",
         options=options
     )
 
-    browser = Browser(Config(
-        driver=driver,
-        base_url=base_url
-    ))
+    browser.config.driver = driver
+
 
     yield browser
 
     attach.add_screenshot(browser)
     attach.add_logs(browser)
     attach.add_html(browser)
-    attach.add_video(browser)
+    attach.add_video(browser, selenoid_url)
 
     driver.quit()
 
