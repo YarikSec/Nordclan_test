@@ -172,7 +172,7 @@ pytest -n 2 # Запустит два теста параллельно
 
 ----
 ### Полная статистика хранится в Allure TestOps
-> [Ссылка на проект в AllureTestOps](https://allure.autotests.cloud/project/4670/dashboards)
+> [Ссылка на проект в AllureTestOps](https://allure.autotests.cloud/project/4676/dashboards)
 
 #### Дашборд с общими показателями тестовых прогонов
 
@@ -194,13 +194,13 @@ pytest -n 2 # Запустит два теста параллельно
 
 ### Интеграция с Jira
 
-> [Ссылка на проект в Jira](https://jira.autotests.cloud/browse/HOMEWORK-1421)
+> [Ссылка на проект в Jira](https://jira.autotests.cloud/browse/HOMEWORK-1423)
 
 ![This is an image](media/images/jira.png)
 
 ----
 ### Оповещение о результатах прогона тестов в Telegram
-> [Ссылка на канал в Telegram](https://t.me/litres_autotest)
+> [Ссылка на канал в Telegram](https://t.me/aqa_python_yarik)
 
 ![This is an image](media/images/telegram_report.png)
 
