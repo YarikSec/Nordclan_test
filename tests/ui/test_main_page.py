@@ -1,6 +1,5 @@
 import allure
 from selene import browser, have
-import time
 
 
 @allure.feature('UI Tests')
