@@ -36,6 +36,9 @@ def setup_browser(request):
 
 
     options = Options()
+    options.add_argument('--headless')
+
+    '''
     selenoid_capabilities = {
         "browserName": "chrome",
         "browserVersion": browser_version,
@@ -54,16 +57,18 @@ def setup_browser(request):
         command_executor=f"https://{selenoid_login}:{selenoid_password}@{selenoid_url}/wd/hub",
         options=options
     )
-
+    '''
+    driver = webdriver.Chrome(options=options)
     browser.config.driver = driver
-
 
     yield browser
 
     attach.add_screenshot(browser)
     attach.add_logs(browser)
     attach.add_html(browser)
-    attach.add_video(browser, selenoid_url)
+    if driver == webdriver.Remote:
+        attach.add_video(browser, selenoid_url)
+    # attach.add_video(browser, selenoid_url) # раскомментировать при запуске на selenoid
 
     driver.quit()
 
